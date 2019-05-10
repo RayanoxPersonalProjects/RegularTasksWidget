@@ -1,18 +1,34 @@
 A faire:
 
+	######################
+	# TECHNICAL FEATURES #
+	######################
+
  - Widget:
-	- Coder l'affichage graphique
+	- [] Coder l'affichage graphique
  - Service background:
-	- 1 Trigger vers 5h00
-		- Ouvre un thread périodique qui tente une synchro toutes les X2 minutes
-	- Dès qu'une nouvelle modif a lieu, on ouvre un nouveau thread de MAJ de la donnée dans Google Tasks.
-		- Le thread boucle périodiquement (de période X2) jusqu'à réussir la MAJ
-	- 1 Trigger d'effacement du fichier de log tous les jours à 00:00.
+	- [] 1 Trigger vers 5h00
+		- [] Ouvre un thread périodique qui tente une synchro toutes les X2 minutes
+	- [] Dès qu'une nouvelle modif a lieu, on ouvre un nouveau thread de MAJ de la donnée dans Google Tasks.
+		- [] Le thread boucle périodiquement (de période X2) jusqu'à réussir la MAJ
+	- [] 1 Trigger d'effacement du fichier de log tous les jours à 00:00.
 
  - Général:
-	- On loggue à chaque action dans un fichier (que l'on efface chaque jour via trigger).
-	- Au démarrage, on lance une récup des tâches. (en écrasant l'affichage précédent)
+	- [] On loggue à chaque action dans un fichier (que l'on efface chaque jour via trigger).
+	- [] Au démarrage, on lance une récup des tâches. (en écrasant l'affichage précédent).
+	- [] Gérer les exceptions au plus au niveau de l'appli et les logguer
 
+
+	##############
+	# TASKS LIST #
+	##############
+
+ [1h00]: Coder l'affichage du widget
+ [1h30]: Coder Communication avec API Tasks (Lecture de toutes les taches / Ecriture (modif) d'une seule tache à la fois)
+ [0h35]: Coder le système de logs
+ [1h30]: Coder le trigger de récup des taches (+ push de l'affichage dans le widget)
+ [1h00]: Coder le 'OnChange' (quelque chose comme ça) pour qu'il lance la MAJ dès qu'une nouvelle modif est faite (tache complétée ou inverse)
+ [1h00]: Coder la boucle d'essais de synchronisations.
 
 
 
