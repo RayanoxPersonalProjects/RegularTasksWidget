@@ -1,0 +1,29 @@
+A faire:
+
+ - Widget:
+	- Coder l'affichage graphique
+ - Service background:
+	- 1 Trigger vers 5h00
+		- Ouvre un thread périodique qui tente une synchro toutes les X2 minutes
+	- Dès qu'une nouvelle modif a lieu, on ouvre un nouveau thread de MAJ de la donnée dans Google Tasks.
+		- Le thread boucle périodiquement (de période X2) jusqu'à réussir la MAJ
+	- 1 Trigger d'effacement du fichier de log tous les jours à 00:00.
+
+ - Général:
+	- On loggue à chaque action dans un fichier (que l'on efface chaque jour via trigger).
+	- Au démarrage, on lance une récup des tâches. (en écrasant l'affichage précédent)
+
+
+
+
+
+
+
+Notes: Ce n'est pas grave si l'on ne prévoit pas tous les cas d'échec possible et de mauvaises synchronisation (si téléphone éteint, pas de réseau pendant longtemps). En effet, ce sont des cas rares et les seules causes seront des MAJ des taches sur Google qui ne seront pas effectuées. Le plus important est que les données que l'on a lors du lancement sont bien à jours (récupération des informations).
+
+
+
+
+
+Variables Globales:
+ . X2 = 30 min
