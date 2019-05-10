@@ -1,0 +1,15 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rowTask"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/checkBoxRowTask"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:gravity="center_vertical"
+        android:text="CheckBox"
+        android:textSize="24sp" />
+
+</FrameLayout>

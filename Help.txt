@@ -1,0 +1,8 @@
+Pour créer le service qui updatera le widget:
+	- https://vogella.developpez.com/tutoriels/android/creation-widget/
+
+Pour développer une liste en affichage d'un widget (différent de si ça avait été dans une Activité):
+	- https://developer.android.com/guide/topics/appwidgets/index.html#collections
+
+Un exemple de dev:
+	- https://android.googlesource.com/platform/development/+/master/samples/StackWidget/src/com/example/android/stackwidget
