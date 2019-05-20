@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AppWidget</string>
+    
+    <string name="news_main_title">News Home</string>
+    <string name="news_detail_title">News Detail</string>
+
+    <string name="opencdk_home">www.opencdk.com</string>
+
+</resources>
