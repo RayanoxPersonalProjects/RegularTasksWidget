@@ -22,6 +22,8 @@ public class NewsWidgetService extends RemoteViewsService implements Runnable {
 
     private static final String TAG = "NewsWidgetService";
 
+    private final static int HOURS_PERIOD_ALARM = 12;
+
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new NewsListRemoteViewsFactory(this.getApplicationContext(), intent);
@@ -55,7 +57,7 @@ public class NewsWidgetService extends RemoteViewsService implements Runnable {
         PendingIntent pending = PendingIntent.getBroadcast(NewsWidgetService.this, 0, autoRefreshIntent, 0);
 
         // 1*60
-        final long updateTime = 1 * 60 * 1000;
+        final long updateTime = HOURS_PERIOD_ALARM * 60 * 1000;
         Time time = new Time();
         long nowMillis = System.currentTimeMillis();
         time.set(nowMillis + updateTime);

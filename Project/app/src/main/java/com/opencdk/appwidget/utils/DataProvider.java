@@ -1,6 +1,6 @@
 package com.opencdk.appwidget.utils;
 
-import com.opencdk.appwidget.model.News;
+import com.opencdk.appwidget.model.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,11 +51,11 @@ public class DataProvider {
      *
      * @return
      */
-    public static List<News> getRandomNews() {
-        List<News> newsList = new ArrayList<News>();
+    public static List<Task> getRandomNews() {
+        List<Task> taskList = new ArrayList<Task>();
 
         final int newsCount = 10;
-        News news = new News();
+        Task task = new Task();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String dateString = null;
         // 随机新闻
@@ -63,15 +63,15 @@ public class DataProvider {
         // 随机新闻图片标签
         int[] randMarkArray = DataProvider.getRandomArray(newsCount);
         for (int i = 0; i < newsCount; i++) {
-            news = new News();
-            news.setTitle(newsArray[i]);
+            task = new Task();
+            task.setTitle(newsArray[i]);
             dateString = sdf.format(new Date());
-            news.setDate(dateString);
+            task.setDate(dateString);
 
-            newsList.add(news);
+            taskList.add(task);
         }
 
-        return newsList;
+        return taskList;
     }
 
 }

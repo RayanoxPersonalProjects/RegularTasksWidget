@@ -10,12 +10,20 @@
         android:layout_height="wrap_content"
         android:background="@drawable/widget_titlebar" >
 
-        <ImageView
+
+        <TextView
             android:id="@+id/widget_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/widget_title_icon" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="37dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:text="Rayanox"
+            android:textColor="@color/white"
+            android:textSize="17dp" />
 
         <ImageView
             android:id="@+id/widget_refresh"

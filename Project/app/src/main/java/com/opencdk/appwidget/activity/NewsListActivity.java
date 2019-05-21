@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.opencdk.appwidget.BaseActivity;
 import com.opencdk.appwidget.GConstants;
 import com.opencdk.appwidget.R;
-import com.opencdk.appwidget.model.News;
+import com.opencdk.appwidget.model.Task;
 import com.opencdk.appwidget.utils.DataProvider;
 import com.opencdk.appwidget.utils.ViewUtils;
 
@@ -32,18 +31,18 @@ public class NewsListActivity extends BaseActivity {
         setContentView(R.layout.layout_news_list_main);
 
         listView = (ListView) findViewById(R.id.listView);
-        List<News> news = DataProvider.getRandomNews();
-        NewsListAdapter adapter = new NewsListAdapter(this, news);
+        List<Task> tasks = DataProvider.getRandomNews();
+        NewsListAdapter adapter = new NewsListAdapter(this, tasks);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                News news = (News) parent.getAdapter().getItem(position);
+                Task task = (Task) parent.getAdapter().getItem(position);
 
                 Intent fillInIntent = new Intent(NewsListActivity.this, NewsDetailActivity.class);
                 Bundle extras = new Bundle();
-                extras.putString(GConstants.SCHEME_DATA_KEY, news.toJSON().toString());
+                extras.putString(GConstants.SCHEME_DATA_KEY, task.toJSON().toString());
                 fillInIntent.putExtras(extras);
                 fillInIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(fillInIntent);
@@ -56,25 +55,25 @@ public class NewsListActivity extends BaseActivity {
     public static class NewsListAdapter extends BaseAdapter {
 
         private Context mContext = null;
-        private List<News> news = null;
+        private List<Task> tasks = null;
 
-        public NewsListAdapter(Context context, List<News> news) {
-            if (news == null) {
-                news = new ArrayList<News>();
+        public NewsListAdapter(Context context, List<Task> tasks) {
+            if (tasks == null) {
+                tasks = new ArrayList<Task>();
             }
 
             this.mContext = context;
-            this.news = news;
+            this.tasks = tasks;
         }
 
         @Override
         public int getCount() {
-            return this.news.size();
+            return this.tasks.size();
         }
 
         @Override
-        public News getItem(int position) {
-            return this.news.get(position);
+        public Task getItem(int position) {
+            return this.tasks.get(position);
         }
 
         @Override
@@ -90,8 +89,8 @@ public class NewsListActivity extends BaseActivity {
 
             TextView tv_title = ViewUtils.get(convertView, R.id.tv_title);
 
-            News news = getItem(position);
-            tv_title.setText(news.getTitle());
+            Task task = getItem(position);
+            tv_title.setText(task.getTitle());
 
             return convertView;
         }

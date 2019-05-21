@@ -3,12 +3,14 @@ package com.opencdk.appwidget.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.SystemClock;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.opencdk.appwidget.model.News;
+import com.opencdk.appwidget.R;
+import com.opencdk.appwidget.model.Task;
 import com.opencdk.appwidget.utils.DataProvider;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
     private static final int VIEW_TYPE_COUNT = 1;
 
-    private List<News> mNewsList = new ArrayList<News>();
+    private List<Task> mTaskList = new ArrayList<Task>();
 
     private Context mContext;
 
@@ -30,16 +32,16 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onCreate() {
-
+        // TODO: C'est ici que je dois coder la recuperation complete de la liste des tasks du jour
     }
 
     @Override
     public int getCount() {
-        if (mNewsList == null) {
+        if (mTaskList == null) {
             return 0;
         }
 
-        return mNewsList.size();
+        return mTaskList.size();
     }
 
     @Override
@@ -47,8 +49,8 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         return position;
     }
 
-    private News getNews(int index) {
-        return mNewsList.get(index);
+    private Task getNews(int index) {
+        return mTaskList.get(index);
     }
 
     @Override
@@ -69,8 +71,12 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         NewsRemoteViews newsRemoteViews = new NewsRemoteViews(mContext);
         newsRemoteViews.loadComplete();
 
-        News newsItem = getNews(position);
-        return newsRemoteViews.applyNewsView(newsItem);
+        Task taskItem = getNews(position);
+
+        taskItem.setCompleted(position % 2 == 0); // TODO: A virer
+
+
+        return newsRemoteViews.applyNewsView(taskItem);
     }
 
     /**
@@ -100,19 +106,19 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onDataSetChanged() {
-        mNewsList.clear();
+        mTaskList.clear();
 
         SystemClock.sleep(2000);
-        mNewsList = getNews();
+        mTaskList = getNews();
     }
 
-    private List<News> getNews() {
+    private List<Task> getNews() {
         return DataProvider.getRandomNews();
     }
 
     @Override
     public void onDestroy() {
-        mNewsList.clear();
+        mTaskList.clear();
     }
 
 //	private void setNetImage(final Context context) {

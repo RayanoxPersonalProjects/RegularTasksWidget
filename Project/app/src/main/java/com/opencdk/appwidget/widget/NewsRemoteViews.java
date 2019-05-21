@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +14,7 @@ import android.widget.RemoteViews;
 
 import com.opencdk.appwidget.GConstants;
 import com.opencdk.appwidget.R;
-import com.opencdk.appwidget.model.News;
+import com.opencdk.appwidget.model.Task;
 
 /**
  * 
@@ -109,24 +110,24 @@ public class NewsRemoteViews extends RemoteViews {
 
 	/**
 	 * 
-	 * @param news
+	 * @param task
 	 * @return
 	 */
-	public RemoteViews applyNewsView(final News news) {
-		if (news == null) {
+	public RemoteViews applyNewsView(final Task task) {
+		if (task == null) {
 			return null;
 		}
 
 		RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.layout_widget_news_list_item);
 		views.setViewVisibility(R.id.tv_title, View.VISIBLE);
 
-		views.setTextViewText(R.id.tv_title, news.getTitle());
-
 		//TODO : Mettre la donnée du contenu de la ligne de la liste dans l'intent
+		views.setTextViewText(R.id.tv_title, task.getTitle());
+		views.setTextColor(R.id.tv_title, task.getIsCompleted() ? Color.GREEN : Color.RED);
 
 		Intent fillInIntent = new Intent();
 		Bundle extras = new Bundle();
-		extras.putString(GConstants.SCHEME_DATA_KEY, news.toJSON().toString());
+		extras.putString(GConstants.SCHEME_DATA_KEY, task.toJSON().toString());
 		fillInIntent.putExtras(extras);
 
 		views.setOnClickFillInIntent(R.id.news_container, fillInIntent);

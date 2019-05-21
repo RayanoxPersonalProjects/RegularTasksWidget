@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.opencdk.appwidget.BaseActivity;
 import com.opencdk.appwidget.GConstants;
 import com.opencdk.appwidget.R;
-import com.opencdk.appwidget.model.News;
+import com.opencdk.appwidget.model.Task;
 
 public class NewsDetailActivity extends BaseActivity {
 
@@ -38,12 +38,12 @@ public class NewsDetailActivity extends BaseActivity {
 	}
 
 	private void handleNewsDetail(String jsonString) {
-		News news = News.toObject(jsonString);
-		if (news == null) {
+		Task task = Task.toObject(jsonString);
+		if (task == null) {
 			return;
 		}
 
-		newsTitle.setText(news.getTitle());
+		newsTitle.setText(task.getTitle());
 		newsMessage.setText("所有新闻内容, 均属于测试数据!!!");
 	}
 

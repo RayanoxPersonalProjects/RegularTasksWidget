@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.opencdk.appwidget.GConstants;
 import com.opencdk.appwidget.activity.NewsListActivity;
+import com.opencdk.appwidget.model.Task;
 
 /**
  * 
@@ -53,16 +54,22 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.notifyAppWidgetViewDataChanged();
-		} else if (ACTION_JUMP_LISTITEM.equals(intent.getAction())) {
+		} else if (ACTION_JUMP_LISTITEM.equals(intent.getAction())) { // Click sur un item du widget
 			Log.d(TAG, "-- ACTION_JUMP_LISTITEM --");
 
 			if(intent.getExtras() != null) {
-				System.out.println("Le nom de la task cliquée = " + intent.getExtras().get(KEY_TASK_NAME));
+				String jsonString = intent.getExtras().getString(GConstants.SCHEME_DATA_KEY);
+				Task task = Task.toObject(jsonString);
+
+				System.out.println("Le nom de la task cliquée = " + task.getTitle());
+
+				//TODO : On receptionne le click ici -> On met à jours la task sur google Task
+
 			}else {
 				System.out.println("/!\\ RAYANE - Absence de bundle lors de la réception ... /!\\");
 			}
 
-			//TODO : On receptionne le click ici -> On met à jours la task sur google Task
+
 
 
 

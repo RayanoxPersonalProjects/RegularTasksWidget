@@ -3,11 +3,13 @@ package com.opencdk.appwidget.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class News {
+public class Task {
 
 	private String title;
 
 	private String date;
+
+	private boolean isCompleted;
 
 	public String getTitle() {
 		return title;
@@ -16,6 +18,10 @@ public class News {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public void setCompleted(boolean completed) { isCompleted = completed; }
+
+	public boolean getIsCompleted() {return isCompleted; }
 
 	public String getDate() {
 		return date;
@@ -30,6 +36,7 @@ public class News {
 		try {
 			json.put("title", title);
 			json.put("date", date);
+			json.put("isCompleted", isCompleted);
 		} catch (JSONException e) {
 			// e.printStackTrace();
 		}
@@ -38,23 +45,24 @@ public class News {
 
 	}
 
-	public static News toObject(String jsonString) {
-		News news = null;
+	public static Task toObject(String jsonString) {
+		Task task = null;
 		try {
 			JSONObject json = new JSONObject(jsonString);
 
 			String title = json.optString("title");
 			String date = json.optString("date");
-			int newsMark = json.optInt("newsMark", 0);
+			boolean isCompleted = json.optBoolean("isCompleted");
 
-			news = new News();
-			news.setTitle(title);
-			news.setDate(date);
+			task = new Task();
+			task.setTitle(title);
+			task.setDate(date);
+			task.setCompleted(isCompleted);
 		} catch (JSONException e) {
 			// e.printStackTrace();
 		}
 
-		return news;
+		return task;
 	}
 
 }
