@@ -36,7 +36,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
 
-		System.out.println("RAYANE - RECEPTION dans NewsAppWidgetProvider");
+		System.out.println("RAYANE - RECEPTION dans NewsAppWidgetProvider .");
 
 		if (ACTION_JUMP_LOGO.equalsIgnoreCase(intent.getAction())) {
 			Intent newsListIntent = new Intent(context, NewsListActivity.class);

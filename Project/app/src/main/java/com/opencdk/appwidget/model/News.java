@@ -9,8 +9,6 @@ public class News {
 
 	private String date;
 
-	private int newsMark;
-
 	public String getTitle() {
 		return title;
 	}
@@ -27,20 +25,11 @@ public class News {
 		this.date = date;
 	}
 
-	public int getNewsMark() {
-		return newsMark;
-	}
-
-	public void setNewsMark(int newsMark) {
-		this.newsMark = newsMark;
-	}
-
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		try {
 			json.put("title", title);
 			json.put("date", date);
-			json.put("newsMark", newsMark);
 		} catch (JSONException e) {
 			// e.printStackTrace();
 		}
@@ -61,7 +50,6 @@ public class News {
 			news = new News();
 			news.setTitle(title);
 			news.setDate(date);
-			news.setNewsMark(newsMark);
 		} catch (JSONException e) {
 			// e.printStackTrace();
 		}

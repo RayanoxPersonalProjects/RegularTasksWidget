@@ -82,8 +82,6 @@ public class NewsListActivity extends BaseActivity {
             return position;
         }
 
-        private static final int[] MARK_ARRAY = {R.drawable.ic_mark_pic, R.drawable.ic_mark_pic_many, R.drawable.ic_mark_video};
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
@@ -91,13 +89,9 @@ public class NewsListActivity extends BaseActivity {
             }
 
             TextView tv_title = ViewUtils.get(convertView, R.id.tv_title);
-            TextView tv_date = ViewUtils.get(convertView, R.id.tv_date);
-            ImageView iv_mark = ViewUtils.get(convertView, R.id.iv_mark);
 
             News news = getItem(position);
             tv_title.setText(news.getTitle());
-            tv_date.setText(news.getDate());
-            iv_mark.setImageResource(MARK_ARRAY[news.getNewsMark() % MARK_ARRAY.length]);
 
             return convertView;
         }

@@ -67,7 +67,6 @@ public class DataProvider {
             news.setTitle(newsArray[i]);
             dateString = sdf.format(new Date());
             news.setDate(dateString);
-            news.setNewsMark(randMarkArray[i]);
 
             newsList.add(news);
         }

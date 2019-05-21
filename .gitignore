@@ -1,2 +1,5 @@
 **/credentials.json
 **/build/**
+**/.idea/**
+**/.gradle/**
+Project.iml

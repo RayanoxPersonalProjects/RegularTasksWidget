@@ -25,8 +25,6 @@ import com.opencdk.appwidget.model.News;
  */
 public class NewsRemoteViews extends RemoteViews {
 
-	private static final int[] MARK_ARRAY = { R.drawable.ic_mark_pic, R.drawable.ic_mark_pic_many, R.drawable.ic_mark_video };
-
 	private Context mContext;
 
 	private AppWidgetManager mAppWidgetManager;
@@ -121,12 +119,8 @@ public class NewsRemoteViews extends RemoteViews {
 
 		RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.layout_widget_news_list_item);
 		views.setViewVisibility(R.id.tv_title, View.VISIBLE);
-		views.setViewVisibility(R.id.tv_date, View.VISIBLE);
-		views.setViewVisibility(R.id.iv_mark, View.VISIBLE);
 
 		views.setTextViewText(R.id.tv_title, news.getTitle());
-		views.setTextViewText(R.id.tv_date, news.getDate());
-		views.setImageViewResource(R.id.iv_mark, MARK_ARRAY[news.getNewsMark() % MARK_ARRAY.length]);
 
 		//TODO : Mettre la donnée du contenu de la ligne de la liste dans l'intent
 
