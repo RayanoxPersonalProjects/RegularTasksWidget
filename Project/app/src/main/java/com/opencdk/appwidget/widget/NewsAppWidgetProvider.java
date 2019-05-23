@@ -11,6 +11,9 @@ import android.util.Log;
 import com.opencdk.appwidget.GConstants;
 import com.opencdk.appwidget.activity.NewsListActivity;
 import com.opencdk.appwidget.model.Task;
+import com.opencdk.appwidget.utils.GoogleTaskApiClient;
+
+import java.io.IOException;
 
 /**
  * 
@@ -45,7 +48,13 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 			context.startActivity(newsListIntent);
 		} else if (ACTION_REFRESH_MANUAL.equals(intent.getAction())) {
 			Log.d(TAG, "-- APPWIDGET_REFRESH_MANUAL --");
-			
+
+			try {
+				GoogleTaskApiClient.GetAllTasksOfCurrentDay(context);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.loading();
 			remoteViews.notifyAppWidgetViewDataChanged();

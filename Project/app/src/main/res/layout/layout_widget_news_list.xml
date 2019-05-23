@@ -23,7 +23,7 @@
             android:gravity="center"
             android:text="Rayanox"
             android:textColor="@color/white"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/widget_refresh"

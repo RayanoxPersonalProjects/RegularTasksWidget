@@ -8,7 +8,7 @@
     </style>
     
     <style name="CDK.Theme.NoTitleBar" parent="CDK.Application.Theme">
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -20,7 +20,7 @@
         <!-- <item name="android:windowIsTranslucent">true</item> -->
     </style>
     
-    <style name="CDK.Theme.NoTitleBar.Fullscreen" parent="CDK.Theme.NoTitleBar.Fullscreen">
+    <style name="CDK.Theme.NoTitleBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
     </style>
     

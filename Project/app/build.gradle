@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.opencdk.appwidget"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 28
     }
 
     buildTypes {
@@ -15,9 +15,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:21.0.3'
-    implementation 'com.android.support:appcompat-v7:21.0.3'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    implementation ('com.google.api-client:google-api-client:1.23.0' , {
+        exclude group:'org.apache.httpcomponents', module:'httpclient'
+        exclude group:'commons-logging', module:'commons-logging'
+    })
 }

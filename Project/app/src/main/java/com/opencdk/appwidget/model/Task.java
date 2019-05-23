@@ -5,6 +5,15 @@ import org.json.JSONObject;
 
 public class Task {
 
+	public Task() {
+
+	}
+
+	public Task(String title, boolean isCompleted) {
+		this.setCompleted(isCompleted);
+		this.setTitle(title);
+	}
+
 	private String title;
 
 	private String date;

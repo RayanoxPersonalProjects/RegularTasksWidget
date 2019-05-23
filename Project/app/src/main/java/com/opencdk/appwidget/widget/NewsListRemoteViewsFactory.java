@@ -12,9 +12,13 @@ import android.widget.RemoteViewsService;
 import com.opencdk.appwidget.R;
 import com.opencdk.appwidget.model.Task;
 import com.opencdk.appwidget.utils.DataProvider;
+import com.opencdk.appwidget.utils.GoogleTaskApiClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.opencdk.appwidget.utils.GoogleTaskApiClient.GetAllTasksOfCurrentDay;
 
 class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
@@ -33,6 +37,15 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
     @Override
     public void onCreate() {
         // TODO: C'est ici que je dois coder la recuperation complete de la liste des tasks du jour
+        System.out.println(" RAYANE -- onCreate");
+
+        try {
+            List<Task> taskList = GoogleTaskApiClient.GetAllTasksOfCurrentDay(mContext);
+            System.out.println("La récup a fonctionné");
+        } catch (IOException e) {
+            System.out.println("La récup --> ERROOOOOooOORRRR /!\\ /!\\");
+            e.printStackTrace();
+        }
     }
 
     @Override
