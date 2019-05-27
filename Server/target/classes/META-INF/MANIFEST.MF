@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: android-tasks-mediation
+Implementation-Version: 0.1.0
+Built-By: rbenhmidane
+Implementation-Vendor-Id: com.rb.servers.android
+Build-Jdk: 1.8.0_181
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/android-tasks-mediation
+Created-By: Maven Integration for Eclipse
+
