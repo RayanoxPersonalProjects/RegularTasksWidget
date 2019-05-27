@@ -9,6 +9,12 @@ public class OperationResult {
 		this.isSuccess = isSuccess;
 		this.errorMessage = errorMessage;
 	}
+	
+	//Success
+	protected OperationResult() {
+		this.isSuccess = true;
+		this.errorMessage = null;		
+	}
 
 	public boolean isSuccess() {
 		return isSuccess;

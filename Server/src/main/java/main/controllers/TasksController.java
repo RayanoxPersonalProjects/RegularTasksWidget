@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.authentication.ServerTokenProvider;
-import main.clients.GoogleTaskClient;
 import main.clients.IGoogleTaskClient;
 import main.model.AllTasksResults;
 import main.model.OperationResult;
+import main.model.SuccessOperation;
 import main.model.Task;
 
 @RestController
@@ -51,24 +51,16 @@ public class TasksController {
     	if(failedAuth != null)
     		return failedAuth;
     	   
-    	if(task == null || task.getName() == null || task.isCompleted() == null) {
-    		return getFailedOperationResult("At least one input argument is null. Retry without null arguments");
+    	if(task == null || task.getId() == null || task.getName() == null || task.isCompleted() == null) {
+    		return getFailedOperationResult("At least one input argument is null. Retry without null arguments. Task content = \n" + task != null ? task.toString() : "null");
     	}
     	
+		OperationResult resultOp = googleTaskClient.UpdateTask(task);
+
+		if (!resultOp.isSuccess())
+			return getFailedOperationResult(resultOp.getErrorMessage());
     	
-    	
-    	boolean isOperationSuccess;
-    	try {
-    		
-    		System.out.println("");
-    		
-    		// On met à jour les tasks
-    		isOperationSuccess = true;
-    	}catch(Exception e) {
-    		return getFailedOperationResult(e.getMessage() + "\n\n" + e.getStackTrace());
-    	}
-    	
-    	return new OperationResult(isOperationSuccess, null);
+    	return new SuccessOperation();
     }
     
     
