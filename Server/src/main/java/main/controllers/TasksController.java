@@ -1,21 +1,31 @@
 package main.controllers;
 
+import java.util.ArrayList;
+
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import main.Authentication.ServerTokenProvider;
-import model.AllTasksResults;
-import model.OperationResult;
+import main.authentication.ServerTokenProvider;
+import main.clients.GoogleTaskClient;
+import main.clients.IGoogleTaskClient;
+import main.model.AllTasksResults;
+import main.model.OperationResult;
+import main.model.Task;
 
 @RestController
 public class TasksController {
 
 	@Autowired
 	ServerTokenProvider serverTokenProvider;
+	
+	@Autowired
+	IGoogleTaskClient googleTaskClient;
 
     @RequestMapping(value = "/retrieveAllTasks", method = RequestMethod.GET)
     public AllTasksResults RetrieveAllTasks(@RequestParam(value = "token") String token) throws AuthenticationException {
@@ -23,10 +33,10 @@ public class TasksController {
     	if(failedAuth != null)
     		return new AllTasksResults(failedAuth.getErrorMessage());
     	
-    	String [] allTasksOfCurrentDay;
+    	ArrayList<Task> allTasksOfCurrentDay;
     	
     	try {
-    		allTasksOfCurrentDay = new String [] {"Faire le ménage","Faire les courses","Ne rien foutre et manger du Nutella"};
+    		allTasksOfCurrentDay = googleTaskClient.GetAllRegularTasksOfCurrentDay();
     	}catch(Exception e) {
     		return new AllTasksResults(e.getMessage() + "\n\n" + e.getStackTrace());
     	}
@@ -35,19 +45,23 @@ public class TasksController {
         return new AllTasksResults(allTasksOfCurrentDay);
     }
     
-    public OperationResult UpdateTasks(@RequestParam(value = "taskTitle") String taskTitle, @RequestParam(value = "isCompleted") Boolean isCompleted, @RequestParam(value = "token") String token) throws AuthenticationException {
+    @PostMapping(value = "/updateTask")
+    public OperationResult UpdateTask(@RequestBody Task task, @RequestParam(value = "token") String token) throws AuthenticationException {
     	OperationResult failedAuth = processAuthorization(token);
     	if(failedAuth != null)
     		return failedAuth;
-    	
-    	
-    	if(taskTitle == null || isCompleted == null) {
-    		return getFailedOperationResult("At least one of the input parameters is null"); 
+    	   
+    	if(task == null || task.getName() == null || task.isCompleted() == null) {
+    		return getFailedOperationResult("At least one input argument is null. Retry without null arguments");
     	}
+    	
     	
     	
     	boolean isOperationSuccess;
     	try {
+    		
+    		System.out.println("");
+    		
     		// On met à jour les tasks
     		isOperationSuccess = true;
     	}catch(Exception e) {
@@ -56,6 +70,9 @@ public class TasksController {
     	
     	return new OperationResult(isOperationSuccess, null);
     }
+    
+    
+    
     
     
     

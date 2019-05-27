@@ -1,10 +1,12 @@
-package model;
+package main.model;
+
+import java.util.ArrayList;
 
 public class AllTasksResults extends OperationResult {
 
-    private final String [] tasksList;
+    private final ArrayList<Task> tasksList;
 
-    public AllTasksResults(String [] tasksSet) {
+    public AllTasksResults(ArrayList<Task> tasksSet) {
     	super(true, null);
     	
         this.tasksList = tasksSet;
@@ -18,7 +20,7 @@ public class AllTasksResults extends OperationResult {
     
     
 
-    public String [] getTasksList() {
+    public ArrayList<Task> getTasksList() {
         return tasksList;
     }
 }
