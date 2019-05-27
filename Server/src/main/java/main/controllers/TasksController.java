@@ -13,7 +13,7 @@ public class TasksController {
 
 
     @RequestMapping(value = "/retrieveAllTasks", method = RequestMethod.GET)
-    public AllTasksResults RetrieveAllTasks(@RequestParam(value="name", defaultValue="World") String name) {
+    public AllTasksResults RetrieveAllTasks() {
     	
     	String [] allTasksOfCurrentDay;
     	
