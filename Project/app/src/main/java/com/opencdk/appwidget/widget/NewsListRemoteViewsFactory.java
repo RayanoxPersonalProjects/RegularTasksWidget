@@ -3,22 +3,17 @@ package com.opencdk.appwidget.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.SystemClock;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.opencdk.appwidget.R;
 import com.opencdk.appwidget.model.Task;
 import com.opencdk.appwidget.utils.DataProvider;
-import com.opencdk.appwidget.utils.GoogleTaskApiClient;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.opencdk.appwidget.utils.GoogleTaskApiClient.GetAllTasksOfCurrentDay;
 
 class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
@@ -30,6 +25,9 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
     private Context mContext;
 
+    private boolean firstRetrieve = true;
+
+
     public NewsListRemoteViewsFactory(Context context, Intent intent) {
         this.mContext = context;
     }
@@ -40,9 +38,10 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         System.out.println(" RAYANE -- onCreate");
 
         try {
-            List<Task> taskList = GoogleTaskApiClient.GetAllTasksOfCurrentDay(mContext);
+            //List<Task> taskList = GoogleTaskApiClient.GetAllTasksOfCurrentDay(mContext);
+            //TODO Appel au WS methode 'GetAllTasksOfCurrentDay'
             System.out.println("La récup a fonctionné");
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("La récup --> ERROOOOOooOORRRR /!\\ /!\\");
             e.printStackTrace();
         }
@@ -62,7 +61,7 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         return position;
     }
 
-    private Task getNews(int index) {
+    private Task getTasks(int index) {
         return mTaskList.get(index);
     }
 
@@ -84,10 +83,7 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         NewsRemoteViews newsRemoteViews = new NewsRemoteViews(mContext);
         newsRemoteViews.loadComplete();
 
-        Task taskItem = getNews(position);
-
-        taskItem.setCompleted(position % 2 == 0); // TODO: A virer
-
+        Task taskItem = getTasks(position);
 
         return newsRemoteViews.applyNewsView(taskItem);
     }
@@ -122,11 +118,13 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         mTaskList.clear();
 
         SystemClock.sleep(2000);
-        mTaskList = getNews();
+        mTaskList = getTasks();
     }
 
-    private List<Task> getNews() {
-        return DataProvider.getRandomNews();
+    private List<Task> getTasks() {
+        List<Task> results = DataProvider.getAllTasksOfDay(mContext, firstRetrieve);
+        firstRetrieve = false;
+        return results;
     }
 
     @Override

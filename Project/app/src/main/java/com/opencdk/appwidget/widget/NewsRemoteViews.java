@@ -122,7 +122,7 @@ public class NewsRemoteViews extends RemoteViews {
 		views.setViewVisibility(R.id.tv_title, View.VISIBLE);
 
 		//TODO : Mettre la donnée du contenu de la ligne de la liste dans l'intent
-		views.setTextViewText(R.id.tv_title, task.getTitle());
+		views.setTextViewText(R.id.tv_title, task.getName());
 		views.setTextColor(R.id.tv_title, task.getIsCompleted() ? Color.GREEN : Color.RED);
 
 		Intent fillInIntent = new Intent();

@@ -5,32 +5,38 @@ import org.json.JSONObject;
 
 public class Task {
 
+	private String id; //Google tasks ID are String type
+	private String name;
+	private String date;
+	private boolean completed;
+
+
+
 	public Task() {
 
 	}
 
-	public Task(String title, boolean isCompleted) {
-		this.setCompleted(isCompleted);
-		this.setTitle(title);
+	public Task(String name, boolean completed) {
+		this.setCompleted(completed);
+		this.setName(name);
 	}
 
-	private String title;
-
-	private String date;
-
-	private boolean isCompleted;
-
-	public String getTitle() {
-		return title;
+	public Task(String id, String name, boolean completed) {
+		this(name, completed);
+		this.setId(id);
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public String getName() {
+		return name;
 	}
 
-	public void setCompleted(boolean completed) { isCompleted = completed; }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	public boolean getIsCompleted() {return isCompleted; }
+	public void setCompleted(boolean completed) { this.completed = completed; }
+
+	public boolean getIsCompleted() {return completed; }
 
 	public String getDate() {
 		return date;
@@ -43,9 +49,10 @@ public class Task {
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		try {
-			json.put("title", title);
+			json.put("id", id);
+			json.put("name", name);
 			json.put("date", date);
-			json.put("isCompleted", isCompleted);
+			json.put("completed", completed);
 		} catch (JSONException e) {
 			// e.printStackTrace();
 		}
@@ -59,12 +66,14 @@ public class Task {
 		try {
 			JSONObject json = new JSONObject(jsonString);
 
-			String title = json.optString("title");
+			String id = json.optString("id");
+			String title = json.optString("name");
 			String date = json.optString("date");
-			boolean isCompleted = json.optBoolean("isCompleted");
+			boolean isCompleted = json.optBoolean("completed");
 
 			task = new Task();
-			task.setTitle(title);
+			task.setName(id);
+			task.setName(title);
 			task.setDate(date);
 			task.setCompleted(isCompleted);
 		} catch (JSONException e) {
@@ -74,4 +83,11 @@ public class Task {
 		return task;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

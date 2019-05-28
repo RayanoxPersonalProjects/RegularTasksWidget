@@ -31,7 +31,7 @@ public class NewsListActivity extends BaseActivity {
         setContentView(R.layout.layout_news_list_main);
 
         listView = (ListView) findViewById(R.id.listView);
-        List<Task> tasks = DataProvider.getRandomNews();
+        List<Task> tasks = DataProvider.getAllTasksOfDay(this, true);
         NewsListAdapter adapter = new NewsListAdapter(this, tasks);
         listView.setAdapter(adapter);
 
@@ -90,7 +90,7 @@ public class NewsListActivity extends BaseActivity {
             TextView tv_title = ViewUtils.get(convertView, R.id.tv_title);
 
             Task task = getItem(position);
-            tv_title.setText(task.getTitle());
+            tv_title.setText(task.getName());
 
             return convertView;
         }

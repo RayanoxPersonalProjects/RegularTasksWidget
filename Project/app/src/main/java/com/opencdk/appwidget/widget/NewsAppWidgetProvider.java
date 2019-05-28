@@ -4,16 +4,13 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.opencdk.appwidget.GConstants;
 import com.opencdk.appwidget.activity.NewsListActivity;
+import com.opencdk.appwidget.clients.GoogleTaskMediationClient;
 import com.opencdk.appwidget.model.Task;
-import com.opencdk.appwidget.utils.GoogleTaskApiClient;
-
-import java.io.IOException;
+import com.opencdk.appwidget.utils.DataProvider;
 
 /**
  * 
@@ -24,7 +21,14 @@ import java.io.IOException;
  * @Modify 2016-3-22
  */
 public class NewsAppWidgetProvider extends AppWidgetProvider {
-	
+
+	// Lors de la creation du widget, on obtiens la sequence suivante de reception d'intents:
+	//
+	//      1) android.appwidget.action.APPWIDGET_ENABLED
+	//      2) android.appwidget.action.APPWIDGET_UPDATE
+	//      3) android.appwidget.action.APPWIDGET_REFRESH_AUTO
+
+
 	private static final String TAG = "NewsAppWidgetProvider";
 
 	public static final String ACTION_REFRESH_MANUAL = "com.opencdk.appwidget.action.APPWIDGET_REFRESH_MANUAL";
@@ -36,6 +40,9 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 	/** 扩展信息 */
 	public static final String EXT_DATA = "ext_data";
+
+	private GoogleTaskMediationClient googleTaskApiClient;
+
 
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
@@ -49,20 +56,29 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 		} else if (ACTION_REFRESH_MANUAL.equals(intent.getAction())) {
 			Log.d(TAG, "-- APPWIDGET_REFRESH_MANUAL --");
 
-			try {
-				GoogleTaskApiClient.GetAllTasksOfCurrentDay(context);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.loading();
 			remoteViews.notifyAppWidgetViewDataChanged();
 		} else if (ACTION_REFRESH_AUTO.equals(intent.getAction())) {
 			Log.d(TAG, "-- APPWIDGET_REFRESH_AUTO --");
 
+			/*
+			try {
+				GoogleTaskApiClient.GetAllTasksOfCurrentDay(context);
+				//TODO Appel de test au WS methode 'GetAllTasksOfCurrentDay' <-> Ca ne sera pas un appel définitif (sera à retirer)
+			} catch (Exception e) {
+				e.printStackTrace();
+			}*/
+
+
+
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
+			remoteViews.setOnLogoClickPendingIntent();
+			remoteViews.setOnRefreshClickPendingIntent();
+			remoteViews.bindListViewAdapter();
+
 			remoteViews.notifyAppWidgetViewDataChanged();
+
 		} else if (ACTION_JUMP_LISTITEM.equals(intent.getAction())) { // Click sur un item du widget
 			Log.d(TAG, "-- ACTION_JUMP_LISTITEM --");
 
@@ -70,9 +86,14 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 				String jsonString = intent.getExtras().getString(GConstants.SCHEME_DATA_KEY);
 				Task task = Task.toObject(jsonString);
 
-				System.out.println("Le nom de la task cliquée = " + task.getTitle());
+				System.out.println("Le nom de la task cliquée = " + task.getName());
 
-				//TODO : On receptionne le click ici -> On met à jours la task sur google Task
+
+				//On met à jour la task sur Google task + dans la liste de données du widget
+				DataProvider.UpdateTask(task, context);
+
+				NewsRemoteViews remoteViews = new NewsRemoteViews(context);
+				remoteViews.notifyAppWidgetViewDataChanged();
 
 			}else {
 				System.out.println("/!\\ RAYANE - Absence de bundle lors de la réception ... /!\\");
@@ -81,7 +102,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 
 
-
+/*
 			Bundle extras = intent.getExtras();
 			if (extras == null) {
 				return;
@@ -91,7 +112,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 			newIntent.setData(data);
 			newIntent.putExtras(extras);
 			newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			context.startActivity(newIntent);
+			context.startActivity(newIntent);*/
 		} else {
 			System.out.println("Unknown Recevicer: " + intent.getAction());
 		}
@@ -128,6 +149,9 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
+
+		//googleTaskApiClient = new GoogleTaskMediationClient();
+
 	}
 
 	@Override

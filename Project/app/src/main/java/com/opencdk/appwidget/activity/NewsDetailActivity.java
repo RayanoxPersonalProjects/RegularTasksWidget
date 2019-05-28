@@ -43,7 +43,7 @@ public class NewsDetailActivity extends BaseActivity {
 			return;
 		}
 
-		newsTitle.setText(task.getTitle());
+		newsTitle.setText(task.getName());
 		newsMessage.setText("所有新闻内容, 均属于测试数据!!!");
 	}
 

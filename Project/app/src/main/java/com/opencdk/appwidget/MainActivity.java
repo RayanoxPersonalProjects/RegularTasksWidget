@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.opencdk.appwidget.activity.NewsListActivity;
 
@@ -145,7 +144,8 @@ public class MainActivity extends BaseActivity {
                 intent.setData(uri);
                 startActivity(intent);
             } catch (Exception e) {
-                Toast.makeText(getActivity(), "Not found a browser!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Not found a browser!", Toast.LENGTH_SHORT).show();
+                System.err.println("Not found a browser!");
             }
         }
 
