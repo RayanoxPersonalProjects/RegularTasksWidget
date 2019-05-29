@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.widget;
+package com.rb.android.regularTasksWidget.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.util.TypedValue;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.opencdk.appwidget.model.Task;
-import com.opencdk.appwidget.utils.DataProvider;
+import com.rb.android.regularTasksWidget.model.Task;
+import com.rb.android.regularTasksWidget.utils.DataProvider;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,11 @@
-package com.opencdk.appwidget.utils;
+package com.rb.android.regularTasksWidget.utils;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
-import com.opencdk.appwidget.R;
+import com.rb.android.regularTasksWidget.R;
 
 public class NotificationUtil {
 

@@ -1,4 +1,4 @@
-package com.opencdk.appwidget;
+package com.rb.android.regularTasksWidget;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.opencdk.appwidget.activity.NewsListActivity;
+import com.rb.android.regularTasksWidget.activity.NewsListActivity;
 
 public class MainActivity extends BaseActivity {
 

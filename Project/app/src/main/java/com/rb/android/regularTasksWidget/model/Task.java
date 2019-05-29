@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.model;
+package com.rb.android.regularTasksWidget.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;

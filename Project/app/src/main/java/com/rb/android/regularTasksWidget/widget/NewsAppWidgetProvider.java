@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.widget;
+package com.rb.android.regularTasksWidget.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.opencdk.appwidget.GConstants;
-import com.opencdk.appwidget.activity.NewsListActivity;
-import com.opencdk.appwidget.clients.GoogleTaskMediationClient;
-import com.opencdk.appwidget.model.Task;
-import com.opencdk.appwidget.utils.DataProvider;
+import com.rb.android.regularTasksWidget.GConstants;
+import com.rb.android.regularTasksWidget.activity.NewsListActivity;
+import com.rb.android.regularTasksWidget.clients.GoogleTaskMediationClient;
+import com.rb.android.regularTasksWidget.model.Task;
+import com.rb.android.regularTasksWidget.utils.DataProvider;
 
 /**
  * 
@@ -31,12 +31,12 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 	private static final String TAG = "NewsAppWidgetProvider";
 
-	public static final String ACTION_REFRESH_MANUAL = "com.opencdk.appwidget.action.APPWIDGET_REFRESH_MANUAL";
-	public static final String ACTION_REFRESH_AUTO = "com.opencdk.appwidget.action.APPWIDGET_REFRESH_AUTO";
-	public static final String ACTION_JUMP_LISTITEM = "com.opencdk.appwidget.action.APPWIDGET_JUMP_LISTITEM";
-	public static final String ACTION_JUMP_LOGO = "com.opencdk.appwidget.action.APPWIDGET_JUMP_LOGO";
+	public static final String ACTION_REFRESH_MANUAL = "com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_MANUAL";
+	public static final String ACTION_REFRESH_AUTO = "com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_AUTO";
+	public static final String ACTION_JUMP_LISTITEM = "com.rb.android.regularTasksWidget.action.APPWIDGET_JUMP_LISTITEM";
+	public static final String ACTION_JUMP_LOGO = "com.rb.android.regularTasksWidget.action.APPWIDGET_JUMP_LOGO";
 
-	public static final String KEY_TASK_NAME = "com.opencdk.appwidget.action.APPWIDGET_JUMP_LOGO";
+	public static final String KEY_TASK_NAME = "com.rb.android.regularTasksWidget.action.APPWIDGET_JUMP_LOGO";
 
 	/** 扩展信息 */
 	public static final String EXT_DATA = "ext_data";
@@ -111,7 +111,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 				return;
 			}
 			Intent newIntent = new Intent();
-			Uri data = Uri.parse(GConstants.SCHEME_HOST + "?className=com.opencdk.appwidget.activity.NewsDetailActivity");
+			Uri data = Uri.parse(GConstants.SCHEME_HOST + "?className=com.rb.android.regularTasksWidget.activity.NewsDetailActivity");
 			newIntent.setData(data);
 			newIntent.putExtras(extras);
 			newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

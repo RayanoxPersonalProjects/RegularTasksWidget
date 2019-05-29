@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.activity;
+package com.rb.android.regularTasksWidget.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +11,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.opencdk.appwidget.BaseActivity;
-import com.opencdk.appwidget.GConstants;
-import com.opencdk.appwidget.R;
-import com.opencdk.appwidget.model.Task;
-import com.opencdk.appwidget.utils.DataProvider;
-import com.opencdk.appwidget.utils.ViewUtils;
+import com.rb.android.regularTasksWidget.BaseActivity;
+import com.rb.android.regularTasksWidget.GConstants;
+import com.rb.android.regularTasksWidget.R;
+import com.rb.android.regularTasksWidget.model.Task;
+import com.rb.android.regularTasksWidget.utils.DataProvider;
+import com.rb.android.regularTasksWidget.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.widget;
+package com.rb.android.regularTasksWidget.widget;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.text.format.Time;
 import android.widget.RemoteViewsService;
 
-import com.opencdk.appwidget.utils.Utils;
+import com.rb.android.regularTasksWidget.utils.Utils;
 
 /**
  * @author 笨鸟不乖

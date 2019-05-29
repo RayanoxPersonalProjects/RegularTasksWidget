@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.widget;
+package com.rb.android.regularTasksWidget.widget;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,7 +28,7 @@ public class DaemonReceiver extends BroadcastReceiver {
 
 	private static final String TAG = "Global.DaemonReceiver";
 
-	public static final String ACTION_DAEMON_RECEIVER = "com.opencdk.appwidget.action.DAEMON_RECEIVER";
+	public static final String ACTION_DAEMON_RECEIVER = "com.rb.android.regularTasksWidget.action.DAEMON_RECEIVER";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {

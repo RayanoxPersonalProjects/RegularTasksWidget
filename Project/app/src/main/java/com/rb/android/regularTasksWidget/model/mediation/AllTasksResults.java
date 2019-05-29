@@ -1,6 +1,6 @@
-package com.opencdk.appwidget.model.mediation;
+package com.rb.android.regularTasksWidget.model.mediation;
 
-import com.opencdk.appwidget.model.Task;
+import com.rb.android.regularTasksWidget.model.Task;
 
 import java.util.ArrayList;
 

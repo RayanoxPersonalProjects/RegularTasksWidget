@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.clients;
+package com.rb.android.regularTasksWidget.clients;
 
 import android.content.Context;
 
@@ -8,8 +8,8 @@ import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.Gson;
-import com.opencdk.appwidget.model.Task;
-import com.opencdk.appwidget.model.mediation.AllTasksResults;
+import com.rb.android.regularTasksWidget.model.Task;
+import com.rb.android.regularTasksWidget.model.mediation.AllTasksResults;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

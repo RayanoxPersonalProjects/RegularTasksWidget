@@ -1,10 +1,10 @@
-package com.opencdk.appwidget;
+package com.rb.android.regularTasksWidget;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import com.opencdk.appwidget.R;
+import com.rb.android.regularTasksWidget.R;
 
 public class BaseActivity extends AppCompatActivity {
 

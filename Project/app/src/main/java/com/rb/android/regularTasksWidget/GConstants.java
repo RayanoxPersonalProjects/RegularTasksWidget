@@ -1,4 +1,4 @@
-package com.opencdk.appwidget;
+package com.rb.android.regularTasksWidget;
 
 public class GConstants {
 

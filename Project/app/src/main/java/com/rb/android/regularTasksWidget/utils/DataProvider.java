@@ -1,10 +1,10 @@
-package com.opencdk.appwidget.utils;
+package com.rb.android.regularTasksWidget.utils;
 
 import android.content.Context;
 import android.os.Looper;
 
-import com.opencdk.appwidget.clients.GoogleTaskMediationClient;
-import com.opencdk.appwidget.model.Task;
+import com.rb.android.regularTasksWidget.clients.GoogleTaskMediationClient;
+import com.rb.android.regularTasksWidget.model.Task;
 
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.utils;
+package com.rb.android.regularTasksWidget.utils;
 
 import android.app.Activity;
 import android.content.Context;

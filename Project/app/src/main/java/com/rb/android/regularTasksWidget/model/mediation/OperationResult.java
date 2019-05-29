@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.model.mediation;
+package com.rb.android.regularTasksWidget.model.mediation;
 
 public class OperationResult {
     private final boolean success;

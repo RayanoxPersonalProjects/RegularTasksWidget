@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.opencdk.appwidget"
+        applicationId "com.rb.android.regularTasksWidget"
         minSdkVersion 26
         targetSdkVersion 28
     }

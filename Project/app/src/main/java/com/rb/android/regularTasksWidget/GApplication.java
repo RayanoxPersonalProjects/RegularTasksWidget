@@ -1,4 +1,4 @@
-package com.opencdk.appwidget;
+package com.rb.android.regularTasksWidget;
 
 import android.app.Application;
 import android.content.res.Configuration;

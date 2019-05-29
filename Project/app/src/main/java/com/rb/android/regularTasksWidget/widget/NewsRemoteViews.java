@@ -1,4 +1,4 @@
-package com.opencdk.appwidget.widget;
+package com.rb.android.regularTasksWidget.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -12,9 +12,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.opencdk.appwidget.GConstants;
-import com.opencdk.appwidget.R;
-import com.opencdk.appwidget.model.Task;
+import com.rb.android.regularTasksWidget.GConstants;
+import com.rb.android.regularTasksWidget.R;
+import com.rb.android.regularTasksWidget.model.Task;
 
 /**
  * 
