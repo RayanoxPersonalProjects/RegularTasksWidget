@@ -3,3 +3,8 @@
 **/.idea/**
 **/.gradle/**
 Project.iml
+**/target/**
+**/*.p12
+**/.project
+**/.settings/**
+**/tokens/**
