@@ -1,10 +1,18 @@
 package main.authentication;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,11 +23,16 @@ public class ServerTokenProvider {
 	
 	private String serverToken;
 	
-	public ServerTokenProvider() {
-		URL urlFile = this.getClass().getClassLoader().getResource(classPathFile);
+	//@Value("classpath:" + classPathFile)
+	@Value("classpath:credentials_server.txt")
+	Resource credentialServerConfigFile;
+	
+	public ServerTokenProvider() throws IOException {
+		
+		File credentialFileConfig = credentialServerConfigFile.getFile();
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get(urlFile.toURI()));
+			List<String> lines = readAllLines(credentialFileConfig);
 			
 			for (String line : lines) {
 				String [] lineSplitted = line.split("=");
@@ -51,7 +64,7 @@ public class ServerTokenProvider {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean AuthorizeRequestToken(String token) {
 		if(this.serverToken != null) {
 			return this.serverToken.equals(token);
@@ -65,4 +78,22 @@ public class ServerTokenProvider {
 		return serverToken;
 	}
 	
+	
+	
+	
+	
+
+	
+	private List<String> readAllLines(File credentialFileConfig) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(credentialFileConfig));
+		
+		ArrayList<String> allLines = new ArrayList<>();
+		String currentLine;
+		
+		while((currentLine = reader.readLine()) != null) {
+			allLines.add(currentLine);
+		}
+		
+		return allLines;
+	}
 }
