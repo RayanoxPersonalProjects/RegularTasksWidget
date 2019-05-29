@@ -36,21 +36,21 @@ public class DataProvider {
      *
      * @return
      */
-    public static List<Task> getAllTasksOfDay(Context context, boolean firstRetrieve) {
+    public static List<Task> getAllTasksOfDay(Context context, boolean forceSync) {
 
 		processWarnIfTokenForTest(context);
 
-		if(isInsideUpdatePeriod() || firstRetrieve) {
+		// Si on rentre dans cette methode, alors on va faire un appel réseau pour synchroniser l'état de la liste des taches.
+		if(isInsideUpdatePeriod() || tasks.isEmpty() || forceSync) {
 			try {
 				tasks = new ArrayList<Task>( gtaskClient.GetAllTasksOfCurrentDay() );
-				firstRetrieve = false;
 			} catch (Exception e) {
 				//Toast.makeText(context, "Error when trying to retrieve all the tasks of the day : \n" + e.getMessage(), Toast.LENGTH_LONG);
 				e.printStackTrace();
 			}
 		}
 
-        return tasks;
+        return new ArrayList<Task>(tasks);
     }
 
 

@@ -72,7 +72,7 @@ public class Task {
 			boolean isCompleted = json.optBoolean("completed");
 
 			task = new Task();
-			task.setName(id);
+			task.setId(id);
 			task.setName(title);
 			task.setDate(date);
 			task.setCompleted(isCompleted);

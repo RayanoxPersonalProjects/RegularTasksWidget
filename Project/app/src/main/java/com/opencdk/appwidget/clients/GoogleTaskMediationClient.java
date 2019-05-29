@@ -50,7 +50,12 @@ public class GoogleTaskMediationClient {
 
     public void UpdateTask(Task task) throws NotImplementedException {
         String url = addTokenToUrl(URL_UPDATE_ONE_TASK);
-        throw new NotImplementedException();
+        String idTask = task.getId();
+
+        System.out.println("Update de la task " + task.getName() + ", ID = " + idTask);
+
+
+        //throw new NotImplementedException();
     }
 
 

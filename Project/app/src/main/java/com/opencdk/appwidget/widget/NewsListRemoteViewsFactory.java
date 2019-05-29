@@ -17,8 +17,6 @@ import java.util.List;
 
 class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    private static final String TAG = "NewsListRemoteViewsFactory";
-
     private static final int VIEW_TYPE_COUNT = 1;
 
     private List<Task> mTaskList = new ArrayList<Task>();
@@ -34,17 +32,7 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onCreate() {
-        // TODO: C'est ici que je dois coder la recuperation complete de la liste des tasks du jour
-        System.out.println(" RAYANE -- onCreate");
 
-        try {
-            //List<Task> taskList = GoogleTaskApiClient.GetAllTasksOfCurrentDay(mContext);
-            //TODO Appel au WS methode 'GetAllTasksOfCurrentDay'
-            System.out.println("La récup a fonctionné");
-        } catch (Exception e) {
-            System.out.println("La récup --> ERROOOOOooOORRRR /!\\ /!\\");
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -98,7 +86,6 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
     @SuppressLint("NewApi")
     private void setRemoteViewsTextSize(RemoteViews views, int viewId, int textSize) {
         if (android.os.Build.VERSION.SDK_INT >= 16) {
-            // 低版本不支持字体适配
             views.setTextViewTextSize(viewId, TypedValue.COMPLEX_UNIT_SP, textSize / 2);
         }
     }
@@ -115,14 +102,16 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onDataSetChanged() {
-        mTaskList.clear();
+        mTaskList.clear(); //use less because the object is abandoned then to welcome a new instance
 
         SystemClock.sleep(2000);
+
         mTaskList = getTasks();
     }
 
+
     private List<Task> getTasks() {
-        List<Task> results = DataProvider.getAllTasksOfDay(mContext, firstRetrieve);
+        List<Task> results = DataProvider.getAllTasksOfDay(mContext, false);
         firstRetrieve = false;
         return results;
     }

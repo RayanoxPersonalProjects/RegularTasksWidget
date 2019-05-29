@@ -31,7 +31,7 @@ public class NewsListActivity extends BaseActivity {
         setContentView(R.layout.layout_news_list_main);
 
         listView = (ListView) findViewById(R.id.listView);
-        List<Task> tasks = DataProvider.getAllTasksOfDay(this, true);
+        List<Task> tasks = DataProvider.getAllTasksOfDay(this, false);
         NewsListAdapter adapter = new NewsListAdapter(this, tasks);
         listView.setAdapter(adapter);
 

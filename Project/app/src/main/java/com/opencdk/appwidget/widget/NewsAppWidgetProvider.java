@@ -49,7 +49,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 		System.out.println("RAYANE - RECEPTION dans NewsAppWidgetProvider .");
 
-		if (ACTION_JUMP_LOGO.equalsIgnoreCase(intent.getAction())) {
+		if (ACTION_JUMP_LOGO.equalsIgnoreCase(intent.getAction())) { // Inutile pour mon cas mais qui pourrait m'être utile à l'avenir
 			Intent newsListIntent = new Intent(context, NewsListActivity.class);
 			newsListIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			context.startActivity(newsListIntent);
@@ -58,7 +58,10 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.loading();
-			remoteViews.notifyAppWidgetViewDataChanged();
+
+			//Run a thread that will synchronize the datas
+			new SynchronizerThread(context).start();
+
 		} else if (ACTION_REFRESH_AUTO.equals(intent.getAction())) {
 			Log.d(TAG, "-- APPWIDGET_REFRESH_AUTO --");
 
@@ -158,5 +161,30 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
 	}
+
+
+
+
+
+	private class SynchronizerThread extends Thread {
+
+		Context context;
+
+		public SynchronizerThread(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		public void run() {
+			super.run();
+
+			DataProvider.getAllTasksOfDay(context, true); // Alimente le dataProvider des valeurs du serveur.
+
+			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
+			remoteViews.notifyAppWidgetViewDataChanged();
+		}
+	}
+
+
 
 }
