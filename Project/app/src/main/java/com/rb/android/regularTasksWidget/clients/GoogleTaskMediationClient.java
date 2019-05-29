@@ -2,14 +2,18 @@ package com.rb.android.regularTasksWidget.clients;
 
 import android.content.Context;
 
+import com.google.api.client.http.ByteArrayContent;
 import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpContent;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.http.json.JsonHttpContent;
 import com.google.gson.Gson;
 import com.rb.android.regularTasksWidget.model.Task;
 import com.rb.android.regularTasksWidget.model.mediation.AllTasksResults;
+import com.rb.android.regularTasksWidget.model.mediation.OperationResult;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -21,6 +25,9 @@ public class GoogleTaskMediationClient {
 
     private final String URL_RETRIEVE_ALL_TASKS_OF_DAY = "https://10.12.0.87:1943/retrieveAllTasks";
     private final String URL_UPDATE_ONE_TASK = "https://10.12.0.87:1943/updateTask";
+
+
+
 
     private HttpRequestFactory requestFactory;
 
@@ -48,25 +55,33 @@ public class GoogleTaskMediationClient {
     }
 
 
-    public void UpdateTask(Task task) throws NotImplementedException {
-        String url = addTokenToUrl(URL_UPDATE_ONE_TASK);
-        String idTask = task.getId();
+    public void UpdateTask(Task task) throws Exception {
+        String requestJsonBody = convertTaskToJsonString(task);
 
-        System.out.println("Update de la task " + task.getName() + ", ID = " + idTask);
+        HttpContent content = ByteArrayContent.fromString("application/json", requestJsonBody);
+        HttpRequest request = requestFactory.buildPostRequest(
+                new GenericUrl(addTokenToUrl(URL_UPDATE_ONE_TASK)), content);
+
+        request.getHeaders().setContentType("application/json");
+
+        // Sends the request and get the response
+
+        HttpResponse response = request.execute();
+
+        OperationResult result = convertJsonToAllTasksResults(response.parseAsString());
+
+        if(!result.isSuccess())
+            throw new Exception("The WS returned an unsuccessed response --> " + result.getErrorMessage());
 
 
-        //throw new NotImplementedException();
+        //System.out.println("Update de la task " + task.getName() + ", ID = " + idTask);
     }
 
 
 
-    public class NotImplementedException extends Exception {
-        public NotImplementedException() {
-            super("The method has not been implemented yet");
-        }
-    }
-
-
+    /*
+        Privates functions
+     */
 
 
     private String addTokenToUrl(String url) {
@@ -77,6 +92,12 @@ public class GoogleTaskMediationClient {
     private AllTasksResults convertJsonToAllTasksResults(String jsonText) {
         Gson converter = new Gson();
         AllTasksResults result = converter.fromJson(jsonText, AllTasksResults.class);
+        return result;
+    }
+
+    private String convertTaskToJsonString(Task task) {
+        Gson converter = new Gson();
+        String result = converter.toJson(task);
         return result;
     }
 

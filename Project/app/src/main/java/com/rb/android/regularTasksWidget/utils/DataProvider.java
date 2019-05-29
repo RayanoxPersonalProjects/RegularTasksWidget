@@ -94,7 +94,7 @@ public class DataProvider {
 	private static boolean UpdateTaskInDataList(Task task) {
 		for (Task currentTask : tasks ) {
 			if(currentTask.getId().equals(task.getId())) {
-				currentTask.setCompleted(!task.getIsCompleted());
+				currentTask.setCompleted(task.getIsCompleted());
 				return true;
 			}
 		}
@@ -109,7 +109,7 @@ public class DataProvider {
 	private static void processWarnIfTokenForTest(Context context) {
 		//Looper.prepare();
 		if(GoogleTaskMediationClient.TOKEN_SERVER_SIDE.equals("test"))
-			System.out.println("\n\nThe TOKEN_SERVER_SIDE's value is set to its default value 'test', please change it \n\n");
+			System.out.println("\n\nThe TOKEN_SERVER_SIDE's value is set to its default value 'test', please change it in the code before building the APK\n\n");
 			//Toast.makeText(context, "The TOKEN_SERVER_SIDE's value is set to its default value 'test', please change it ", Toast.LENGTH_LONG);
 			//NotificationUtil.PublishNotif_Warn("The TOKEN_SERVER_SIDE's value is set to its default value 'test', please change it ", context);
 	}

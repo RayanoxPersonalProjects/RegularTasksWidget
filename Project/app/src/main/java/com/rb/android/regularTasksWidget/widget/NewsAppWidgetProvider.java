@@ -93,10 +93,8 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 
 				//On met à jour la task sur Google task + dans la liste de données du widget
-				DataProvider.UpdateTask(task, context);
-
-				NewsRemoteViews remoteViews = new NewsRemoteViews(context);
-				remoteViews.notifyAppWidgetViewDataChanged();
+				task.setCompleted(!task.getIsCompleted());
+				new UpdateTaskThread(context, task).start();
 
 			}else {
 				System.out.println("/!\\ RAYANE - Absence de bundle lors de la réception ... /!\\");
@@ -179,6 +177,29 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 			super.run();
 
 			DataProvider.getAllTasksOfDay(context, true); // Alimente le dataProvider des valeurs du serveur.
+
+			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
+			remoteViews.notifyAppWidgetViewDataChanged();
+		}
+	}
+
+
+	private class UpdateTaskThread extends Thread {
+
+		Context context;
+		Task task;
+
+		public UpdateTaskThread(Context context, Task task) {
+
+			this.context = context;
+			this.task = task;
+		}
+
+		@Override
+		public void run() {
+			super.run();
+
+			DataProvider.UpdateTask(task, context);
 
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.notifyAppWidgetViewDataChanged();
