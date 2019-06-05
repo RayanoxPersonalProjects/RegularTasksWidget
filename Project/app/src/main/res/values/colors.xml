@@ -11,6 +11,7 @@
     <color name="transparent">#00000000</color>
     <color name="gray">#fff5f5f6</color>
     <color name="red">#ffe53539</color>
+    <color name="blue">#0273ed</color>
     
     
 </resources>

@@ -8,7 +8,7 @@
         android:id="@+id/top_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/widget_titlebar" >
+        android:background="@color/blue" >
 
 
         <TextView
@@ -19,9 +19,10 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="37dp"
             android:layout_marginLeft="37dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="Rayanox"
+            android:text="Rayanox's tasks"
             android:textColor="@color/white"
             android:textSize="17sp" />
 
