@@ -64,9 +64,15 @@ public class GoogleTaskClient implements IGoogleTaskClient {
 	public ArrayList<Task> GetAllRegularTasksOfCurrentDay() throws IOException {
 		ArrayList<Task> result = new ArrayList<Task>();
 
-		String currentDay = getCurrentDayDateString();
+		Calendar nextDay = Calendar.getInstance();
+		nextDay.add(Calendar.DAY_OF_MONTH, 1);
+		
+		String currentDayString = getDayDateString(Calendar.getInstance());		
+		String nextDayString = getDayDateString(nextDay);
+		
 		com.google.api.services.tasks.model.Tasks listeDeTasks = taskService.tasks().list(REGULAR_TASKLIST_ID)
-				.setDueMin(currentDay)
+				.setDueMin(currentDayString)
+				.setDueMax(nextDayString)
 				.setShowHidden(true)
 				.execute();
 
@@ -105,13 +111,11 @@ public class GoogleTaskClient implements IGoogleTaskClient {
 	
 
 
-	private String getCurrentDayDateString() {
-		Calendar cal = Calendar.getInstance();
-
+	private String getDayDateString(Calendar calendar) {
 		String patternDate = "%d-%d-%dT00:00:00+00:00";
 
-		return String.format(patternDate, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-				cal.get(Calendar.DAY_OF_MONTH));
+		return String.format(patternDate, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
+				calendar.get(Calendar.DAY_OF_MONTH));
 	}
 	
 	
