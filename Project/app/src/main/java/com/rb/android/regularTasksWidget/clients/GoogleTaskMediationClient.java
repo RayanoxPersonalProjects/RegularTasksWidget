@@ -21,11 +21,11 @@ import java.util.List;
 
 public class GoogleTaskMediationClient {
 
-    public static final String TOKEN_SERVER_SIDE = "okay";
+    public static final String TOKEN_SERVER_SIDE = "test";
 
-    private final String URL_RETRIEVE_ALL_TASKS_OF_DAY = "https://51.77.146.48:1943/retrieveAllTasks";
-    private final String URL_RETRIEVE_ALL_FUTURE_TASKS = "https://51.77.146.48:1943/retrieveAllFutureTasks";
-    private final String URL_UPDATE_ONE_TASK = "https://51.77.146.48:1943/updateTask";
+    private final String URL_RETRIEVE_ALL_TASKS_OF_DAY = "https://10.12.0.87:1943/retrieveAllTasks";
+    private final String URL_RETRIEVE_ALL_FUTURE_TASKS = "https://10.12.0.87:1943/retrieveAllFutureTasks";
+    private final String URL_UPDATE_ONE_TASK = "https://10.12.0.87:1943/updateTask";
 
 
 
