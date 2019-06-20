@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -33,9 +35,11 @@ import com.google.api.services.tasks.TasksScopes;
 import com.google.api.services.tasks.model.TaskList;
 import com.google.api.services.tasks.model.TaskLists;
 
+import main.exceptions.BadFormatPropertyException;
 import main.model.OperationResult;
 import main.model.SuccessOperation;
 import main.model.Task;
+import main.utils.Helper;
 
 @Service
 public class GoogleTaskClient implements IGoogleTaskClient {
@@ -84,6 +88,40 @@ public class GoogleTaskClient implements IGoogleTaskClient {
 	}
 
 	@Override
+	public ArrayList<Task> GetAllRegularTasksOfFutureDays() throws IOException, BadFormatPropertyException {
+		ArrayList<Task> result = new ArrayList<Task>();
+
+		Calendar nextDay = Calendar.getInstance();
+		nextDay.add(Calendar.DAY_OF_MONTH, 1);
+		
+		String currentDayString = getDayDateString(Calendar.getInstance());		
+		
+		com.google.api.services.tasks.model.Tasks listeDeTasks = taskService.tasks().list(REGULAR_TASKLIST_ID)
+				.setDueMin(currentDayString)
+				.setShowHidden(true)
+				.execute();
+
+		for (com.google.api.services.tasks.model.Task task : listeDeTasks.getItems()) {
+			HashMap<String, String> notes = extractNotesValues(task.getNotes());
+			int frequence = Integer.parseInt(notes.get("periodTaskDays"));
+			result.add(new Task(task.getId(), task.getTitle(), task.getStatus().equals(STATUS_COMPLETED), new Date(task.getDue().getValue()), frequence));
+		}
+
+		sortByDate(result);
+		
+		// Add specific synthax to display period and remaining days for futures
+		for (Task task : result) {
+			if(task.isFuture()) {
+				int daysRemaining = getDaysRemaining(task);
+				task.setName(String.format("%s (f=%d) [-%d]", task.getName(), task.getDaysFrequence(), daysRemaining));
+			} else
+				task.setName(String.format("%s (f=%d)", task.getName(), task.getDaysFrequence()));
+		}
+		
+		return result;
+	}
+
+	@Override
 	public OperationResult UpdateTask(Task task) {
 		try {
 			com.google.api.services.tasks.model.Task taskToUpdate = taskService.tasks()
@@ -108,7 +146,55 @@ public class GoogleTaskClient implements IGoogleTaskClient {
 	 * Private functions
 	 */
 
+
+
+	private int getDaysRemaining(Task task) {
+		if(task.isFuture()) {
+			Calendar today = Calendar.getInstance();
+			Calendar taskDate = Calendar.getInstance();
+			taskDate.setTime(task.getDate());
+			
+			today = Helper.NormalizeDate(today);
+			taskDate = Helper.NormalizeDate(taskDate);
+			
+			return daysBetween(today.getTime(), taskDate.getTime());
+		} else
+			return 0;
+	}
 	
+	public int daysBetween(Date d1, Date d2){
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+	}
+
+	private HashMap<String, String> extractNotesValues(String notes) throws BadFormatPropertyException {
+		HashMap<String, String> result = new HashMap<String, String>();
+		String [] properties = notes.split(";");
+		for (String line : properties) {
+			String [] lineSplitted = line.split("=");
+			if(lineSplitted.length != 2)
+				throw new BadFormatPropertyException("The property line in the Task 'note' doesn't have the good format (format: key=value). ---> lineSplitted.length = " + lineSplitted.length);
+			String key = lineSplitted[0];
+			String value = lineSplitted[1];
+			result.put(key, value);
+		}
+		return result;
+	}
+
+	private void sortByDate(ArrayList<Task> result) {
+		for (int i = 1; i < result.size(); i++) {
+			int indexToSetTask = i;
+			for(int y = i-1; y >= 0; y--, indexToSetTask--) {
+				if(result.get(i).getDate().compareTo(result.get(y).getDate()) >= 0) {
+					break;
+				}
+			}
+			if(indexToSetTask != i) {
+				Task taskToMove = result.get(i);
+				result.remove(i);
+				result.add(indexToSetTask, taskToMove);
+			}
+		}
+	}
 
 
 	private String getDayDateString(Calendar calendar) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import main.model.AllTasksResults;
 import main.model.OperationResult;
 import main.model.SuccessOperation;
 import main.model.Task;
+import main.utils.Converter;
 
 @RestController
 public class TasksController {
@@ -38,12 +40,31 @@ public class TasksController {
     	try {
     		allTasksOfCurrentDay = googleTaskClient.GetAllRegularTasksOfCurrentDay();
     	}catch(Exception e) {
-    		return new AllTasksResults(e.getMessage() + "\n\n" + e.getStackTrace());
+    		return new AllTasksResults(formatStringException(e));
     	}
     	
     	
         return new AllTasksResults(allTasksOfCurrentDay);
     }
+    
+    @GetMapping(value = "/retrieveAllFutureTasks")
+    public AllTasksResults RetrieveAllFutureTasks(@RequestParam(value = "token") String token) throws AuthenticationException {
+    	OperationResult failedAuth = processAuthorization(token);
+    	if(failedAuth != null)
+    		return new AllTasksResults(failedAuth.getErrorMessage());
+    	
+    	ArrayList<Task> allTasksOfFutureDays;
+    	
+    	try {
+    		allTasksOfFutureDays = googleTaskClient.GetAllRegularTasksOfFutureDays();
+    	}catch(Exception e) {
+    		return new AllTasksResults(formatStringException(e));
+    	}
+    	
+    	
+        return new AllTasksResults(allTasksOfFutureDays);
+    }
+    
     
     @PostMapping(value = "/updateTask")
     public OperationResult UpdateTask(@RequestBody Task task, @RequestParam(value = "token") String token) throws AuthenticationException {
@@ -75,6 +96,9 @@ public class TasksController {
      */
     
 
+    private String formatStringException(Exception e) {
+    	return e.getMessage() + "       -----||-----     " + e.getClass().getName() + " ----- " + Converter.convertStacktraceToString(e.getStackTrace());
+    }
     
     private OperationResult processAuthorization(String token) throws AuthenticationException {
     	if(!serverTokenProvider.AuthorizeRequestToken(token)) {
