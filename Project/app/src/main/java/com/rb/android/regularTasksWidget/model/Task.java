@@ -9,6 +9,8 @@ public class Task {
 	private String name;
 	private String date;
 	private boolean completed;
+	private boolean future;
+	private int daysFrequence;
 
 
 
@@ -36,7 +38,19 @@ public class Task {
 
 	public void setCompleted(boolean completed) { this.completed = completed; }
 
+	public void setFuture(boolean future) { this.future = future; }
+
 	public boolean getIsCompleted() {return completed; }
+
+	public int getDaysFrequence() {
+		return daysFrequence;
+	}
+
+	public void setDaysFrequence(int daysFrequence) {
+		this.daysFrequence = daysFrequence;
+	}
+
+	public boolean getIsFuture() {return future; }
 
 	public String getDate() {
 		return date;
@@ -53,6 +67,8 @@ public class Task {
 			json.put("name", name);
 			json.put("date", date);
 			json.put("completed", completed);
+			json.put("future", future);
+			json.put("daysFrequence", daysFrequence);
 		} catch (JSONException e) {
 			// e.printStackTrace();
 		}
@@ -70,12 +86,16 @@ public class Task {
 			String title = json.optString("name");
 			String date = json.optString("date");
 			boolean isCompleted = json.optBoolean("completed");
+			boolean isFuture = json.optBoolean("future");
+			int daysFrequence = json.optInt("daysFrequence");
 
 			task = new Task();
 			task.setId(id);
 			task.setName(title);
 			task.setDate(date);
 			task.setCompleted(isCompleted);
+			task.setFuture(isFuture);
+			task.setDaysFrequence(daysFrequence);
 		} catch (JSONException e) {
 			// e.printStackTrace();
 		}

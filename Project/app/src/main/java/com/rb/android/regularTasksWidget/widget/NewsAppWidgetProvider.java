@@ -32,6 +32,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 	private static final String TAG = "NewsAppWidgetProvider";
 
 	public static final String ACTION_REFRESH_MANUAL = "com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_MANUAL";
+	public static final String ACTION_REFRESH_FUTURE_MANUAL = "com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_FUTURE_MANUAL";
 	public static final String ACTION_REFRESH_AUTO = "com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_AUTO";
 	public static final String ACTION_JUMP_LISTITEM = "com.rb.android.regularTasksWidget.action.APPWIDGET_JUMP_LISTITEM";
 	public static final String ACTION_JUMP_LOGO = "com.rb.android.regularTasksWidget.action.APPWIDGET_JUMP_LOGO";
@@ -62,7 +63,17 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 			//Run a thread that will synchronize the datas
 			new SynchronizerThread(context).start();
 
-		} else if (ACTION_REFRESH_AUTO.equals(intent.getAction())) {
+		} else if (ACTION_REFRESH_FUTURE_MANUAL.equals(intent.getAction())) {
+			Log.d(TAG, "-- APPWIDGET_REFRESH_FUTURE_MANUAL --");
+			//TODO RAYANOX
+
+			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
+			remoteViews.loading();
+
+			//Run a thread that will synchronize the datas
+			new SynchronizerThread(context, true).start();
+
+		}else if (ACTION_REFRESH_AUTO.equals(intent.getAction())) {
 			Log.d(TAG, "-- APPWIDGET_REFRESH_AUTO --");
 
 			/*
@@ -78,6 +89,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.setOnLogoClickPendingIntent();
 			remoteViews.setOnRefreshClickPendingIntent();
+			remoteViews.setOnFutureRefreshClickPendingIntent();
 			remoteViews.bindListViewAdapter();
 
 			remoteViews.notifyAppWidgetViewDataChanged();
@@ -134,6 +146,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 		NewsRemoteViews newsRemoteViews = new NewsRemoteViews(context);
 		newsRemoteViews.setOnLogoClickPendingIntent();
 		newsRemoteViews.setOnRefreshClickPendingIntent();
+		newsRemoteViews.setOnFutureRefreshClickPendingIntent();
 		newsRemoteViews.bindListViewAdapter();
 
 		// 更新所有的widget
@@ -167,16 +180,25 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 	private class SynchronizerThread extends Thread {
 
 		Context context;
+		boolean retrieveFutureTasks;
 
 		public SynchronizerThread(Context context) {
+			this(context, false);
+		}
+
+		public SynchronizerThread(Context context, boolean retrieveFutureTasks) {
 			this.context = context;
+			this.retrieveFutureTasks = retrieveFutureTasks;
 		}
 
 		@Override
 		public void run() {
 			super.run();
 
-			DataProvider.getAllTasksOfDay(context, true); // Alimente le dataProvider des valeurs du serveur.
+			if(this.retrieveFutureTasks)
+				DataProvider.getAllFutureTasks(context, true); // Alimente le dataProvider des valeurs du serveur.
+			else
+				DataProvider.getAllTasksOfDay(context, true); // Alimente le dataProvider des valeurs du serveur.
 
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.notifyAppWidgetViewDataChanged();

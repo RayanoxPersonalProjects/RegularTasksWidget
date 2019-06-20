@@ -66,6 +66,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 
             	<action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_MANUAL" />
+                <action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_FUTURE_MANUAL" />
             	<action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_AUTO" />
                 <action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_JUMP_LISTITEM" />
                 <action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_JUMP_LOGO" />
@@ -80,6 +81,7 @@
             <intent-filter>
                 <!-- widget手动刷新 -->
                 <action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_MANUAL" />
+                <action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_FUTURE_MANUAL" />
                 <!-- widget自动刷新 -->
                 <action android:name="com.rb.android.regularTasksWidget.action.APPWIDGET_REFRESH_AUTO" />
             </intent-filter>

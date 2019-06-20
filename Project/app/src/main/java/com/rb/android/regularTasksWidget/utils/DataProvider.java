@@ -54,6 +54,29 @@ public class DataProvider {
     }
 
 
+	/**
+	 * Selection de toute la liste de taches à afficher
+	 *
+	 * @return
+	 */
+	public static List<Task> getAllFutureTasks(Context context, boolean forceSync) {
+
+		processWarnIfTokenForTest(context);
+
+		// Si on rentre dans cette methode, alors on va faire un appel réseau pour synchroniser l'état de la liste des taches.
+		if(isInsideUpdatePeriod() || tasks.isEmpty() || forceSync) {
+			try {
+				tasks = new ArrayList<Task>( gtaskClient.GetAllFutureTasks() );
+			} catch (Exception e) {
+				//Toast.makeText(context, "Error when trying to retrieve all the tasks of the day : \n" + e.getMessage(), Toast.LENGTH_LONG);
+				e.printStackTrace();
+			}
+		}
+
+		return new ArrayList<Task>(tasks);
+	}
+
+
 
 	/**
 	 *  Update une seule tache

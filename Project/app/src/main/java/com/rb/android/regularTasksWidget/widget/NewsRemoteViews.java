@@ -85,6 +85,13 @@ public class NewsRemoteViews extends RemoteViews {
 		PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
 		setOnClickPendingIntent(R.id.widget_refresh, refreshPendingIntent);
 	}
+
+	public void setOnFutureRefreshClickPendingIntent() {
+		Intent intent = getProviderIntent();
+		intent.setAction(NewsAppWidgetProvider.ACTION_REFRESH_FUTURE_MANUAL);
+		PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+		setOnClickPendingIntent(R.id.widget_refresh_future, refreshPendingIntent);
+	}
 	
 	public void bindListViewAdapter() {
 		int listViewResId = R.id.listView;
@@ -123,7 +130,7 @@ public class NewsRemoteViews extends RemoteViews {
 
 		//TODO : Mettre la donnée du contenu de la ligne de la liste dans l'intent
 		views.setTextViewText(R.id.tv_title, task.getName());
-		views.setTextColor(R.id.tv_title, task.getIsCompleted() ? Color.GREEN : Color.RED);
+		views.setTextColor(R.id.tv_title, task.getIsFuture() ? Color.BLUE : task.getIsCompleted() ? Color.GREEN : Color.RED);
 
 		Intent fillInIntent = new Intent();
 		Bundle extras = new Bundle();
