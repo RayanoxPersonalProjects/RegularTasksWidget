@@ -132,9 +132,13 @@ public class DataProvider {
 		String errorMessage = "An exception occured when trying to retrieve the tasks";
 
 		if(tasks == null || tasks.isEmpty()) {
+			String message = errorMessage;
+			if(GoogleTaskMediationClient.URL_RETRIEVE_ALL_TASKS_OF_DAY.contains(GoogleTaskMediationClient.defaultIP))
+				message += " --> Default adress and credentials used (adress IP = "+ GoogleTaskMediationClient.defaultIP +")";
+
 			tasks = new ArrayList<Task>();
-			tasks.add(new Task(errorMessage, false));
-		}else if(tasks.size() == 1 && tasks.get(0).getName().equals(errorMessage)) {
+			tasks.add(new Task(message, false));
+		}else if(tasks.size() == 1 && tasks.get(0).getName().startsWith(errorMessage)) {
 			tasks.get(0).setCompleted(!tasks.get(0).getIsCompleted());
 		}
 

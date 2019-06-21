@@ -23,9 +23,11 @@ public class GoogleTaskMediationClient {
 
     public static final String TOKEN_SERVER_SIDE = "test";
 
-    private final String URL_RETRIEVE_ALL_TASKS_OF_DAY = "https://10.12.0.87:1943/retrieveAllTasks";
-    private final String URL_RETRIEVE_ALL_FUTURE_TASKS = "https://10.12.0.87:1943/retrieveAllFutureTasks";
-    private final String URL_UPDATE_ONE_TASK = "https://10.12.0.87:1943/updateTask";
+    public static final String defaultIP = "10.12.0.87";
+
+    public static final String URL_RETRIEVE_ALL_TASKS_OF_DAY = "https://10.12.0.87:1943/retrieveAllTasks";
+    public static String URL_RETRIEVE_ALL_FUTURE_TASKS = "https://10.12.0.87:1943/retrieveAllFutureTasks";
+    public static String URL_UPDATE_ONE_TASK = "https://10.12.0.87:1943/updateTask";
 
 
 
