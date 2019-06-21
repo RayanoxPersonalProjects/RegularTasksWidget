@@ -32,7 +32,7 @@ class NewsListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onCreate() {
-
+        mTaskList = getTasks();
     }
 
     @Override

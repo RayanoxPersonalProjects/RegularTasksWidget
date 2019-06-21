@@ -65,7 +65,6 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
 		} else if (ACTION_REFRESH_FUTURE_MANUAL.equals(intent.getAction())) {
 			Log.d(TAG, "-- APPWIDGET_REFRESH_FUTURE_MANUAL --");
-			//TODO RAYANOX
 
 			NewsRemoteViews remoteViews = new NewsRemoteViews(context);
 			remoteViews.loading();

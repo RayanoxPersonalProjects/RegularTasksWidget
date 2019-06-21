@@ -47,12 +47,13 @@ public class DataProvider {
 			} catch (Exception e) {
 				//Toast.makeText(context, "Error when trying to retrieve all the tasks of the day : \n" + e.getMessage(), Toast.LENGTH_LONG);
 				e.printStackTrace();
+
+				tasks = getTasksWhenErrorOccured(tasks);
 			}
 		}
 
         return new ArrayList<Task>(tasks);
     }
-
 
 	/**
 	 * Selection de toute la liste de taches à afficher
@@ -70,6 +71,8 @@ public class DataProvider {
 			} catch (Exception e) {
 				//Toast.makeText(context, "Error when trying to retrieve all the tasks of the day : \n" + e.getMessage(), Toast.LENGTH_LONG);
 				e.printStackTrace();
+
+				tasks = getTasksWhenErrorOccured(tasks);
 			}
 		}
 
@@ -116,7 +119,7 @@ public class DataProvider {
 	 */
 	private static boolean UpdateTaskInDataList(Task task) {
 		for (Task currentTask : tasks ) {
-			if(currentTask.getId().equals(task.getId())) {
+			if(currentTask.getId() != null && currentTask.getId().equals(task.getId())) {
 				currentTask.setCompleted(task.getIsCompleted());
 				return true;
 			}
@@ -124,7 +127,22 @@ public class DataProvider {
 		return false;
 	}
 
-    private static boolean isInsideUpdatePeriod() {
+
+	private static ArrayList<Task> getTasksWhenErrorOccured(ArrayList<Task> tasks) {
+		String errorMessage = "An exception occured when trying to retrieve the tasks";
+
+		if(tasks == null || tasks.isEmpty()) {
+			tasks = new ArrayList<Task>();
+			tasks.add(new Task(errorMessage, false));
+		}else if(tasks.size() == 1 && tasks.get(0).getName().equals(errorMessage)) {
+			tasks.get(0).setCompleted(!tasks.get(0).getIsCompleted());
+		}
+
+		return tasks;
+	}
+
+
+	private static boolean isInsideUpdatePeriod() {
 		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		return currentHour >= HOUR_MIN_RETRIEVE_DATAS && currentHour < HOUR_MAX_RETRIEVE_DATAS;
 	}
