@@ -1,2 +1,2 @@
 language: java
-script: buildServer.sh
+script: ./buildServer.sh
